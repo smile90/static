@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录-后台管理系统-1.0</title>
+
+    <link rel="stylesheet" href="../../lib/weadmin/css/font.css">
+    <link rel="stylesheet" href="../../lib/weadmin/css/weadmin.css">
+</head>
+
+<body>
+    <div class="weadmin-nav">
+		<span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">管理员管理</a>
+        <a>
+          <cite>管理员列表</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+
+    <div class="weadmin-body">
+        <!-- 查询条件 -->
+        <div id="tableSearch" class="layui-row">
+            <form class="layui-form layui-col-md12 we-search">
+                <div class="layui-inline">
+                    <input type="text" placeholder="用户名" name="username" class="search layui-input" >
+                </div>
+                <div class="layui-inline">
+                    <input type="text" placeholder="姓名" name="realname" class="search layui-input">
+                </div>
+                <button class="layui-btn" lay-submit="" lay-filter="sreach" type="submit"><i class="layui-icon">&#xe615;</i></button>
+            </form>
+        </div>
+
+        <!-- 工具栏 -->
+        <script type="text/html" id="toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
+            </div>
+        </script>
+
+        <!-- 操作栏 -->
+        <script type="text/html" id="tool">
+            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+
+        <!-- 数据展示 -->
+        <table id="table" lay-filter="table"></table>
+
+    </div>
+
+<script type="text/javascript" charset="utf-8" src="../../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../lib/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../lib/layui/layui.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/custom/common.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/token.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/page.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+    layui.use(['table'], function() {
+        layui.table.on('tool(table)', function(obj){
+            console.info(obj);
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if(layEvent === 'detail'){ //查看
+
+            } else if(layEvent === 'edit'){ // 编辑
+
+            } else if(layEvent === 'del'){ // 删除
+                layer.confirm('确认删除么？', function(index){
+
+                });
+            }
+        });
+
+        layui.table.on('toolbar(table)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            console.info(obj);
+            var data = obj.data; // 获得当前行数据
+            var layEvent = obj.event; // 获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if(layEvent === 'add'){ // 新增
+
+            } else if(layEvent === 'del'){ //删除
+                layer.confirm('确认删除么？', function(index){
+
+                });
+            }
+        });
+    });
+
+    /* 构建数据表 */
+    pageConfig.pageTable({
+        elem: '#table'
+        ,toolbar: '#toolbar'
+        ,url: adminConfig.srvUrl() + '/adminUser/listPage'
+        ,cols: [[ //表头
+            {field: 'id', title: 'ID', width:80, hide: true}
+            ,{field: 'userId', title: '用户ID', width:100}
+            ,{field: 'userNo', title: '用户编号', width:100}
+            ,{field: 'username', title: '用户名', width:200, sort: true}
+            ,{field: 'realname', title: '名称', width:200}
+            ,{field: 'status', title: '状态', width: 100}
+            ,{field: 'orders', title: '排序', width: 135, sort: true}
+            ,{title:'操作', width: 200, align:'center', toolbar: '#tool', fixed: 'right'}
+        ]]
+    });
+
+</script>
+
+</body>
+
+</html>
