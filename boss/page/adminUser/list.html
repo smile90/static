@@ -25,19 +25,28 @@
         <!-- 查询条件 -->
         <div id="tableSearch" class="layui-row">
             <form class="layui-form layui-col-md12 we-search">
-                <div class="layui-inline">
-                    <input type="text" placeholder="用户ID" name="userId" class="search layui-input" >
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <input type="text" placeholder="用户ID" name="userId" class="search layui-input" >
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" placeholder="用户编号" name="userNo" class="search layui-input" >
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" placeholder="用户名" name="username" class="search layui-input" >
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" placeholder="姓名" name="realname" class="search layui-input">
+                    </div>
                 </div>
-                <div class="layui-inline">
-                    <input type="text" placeholder="用户编号" name="userNo" class="search layui-input" >
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <button class="layui-btn" lay-submit="" lay-filter="sreach" type="submit">搜索</button>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                    </div>
                 </div>
-                <div class="layui-inline">
-                    <input type="text" placeholder="用户名" name="username" class="search layui-input" >
-                </div>
-                <div class="layui-inline">
-                    <input type="text" placeholder="姓名" name="realname" class="search layui-input">
-                </div>
-                <button class="layui-btn" lay-submit="" lay-filter="sreach" type="submit"><i class="layui-icon">&#xe615;</i></button>
             </form>
         </div>
 
@@ -112,7 +121,8 @@
             ,{field: 'userNo', title: '用户编号', width:100}
             ,{field: 'username', title: '用户名', width:200, sort: true}
             ,{field: 'realname', title: '姓名', width:200}
-            ,{field: 'status', title: '状态', width: 100}
+            ,{field: 'userStatus', title: '用户状态', width: 100}
+            ,{field: 'status', title: '数据状态', width: 100}
             ,{field: 'orders', title: '排序', width: 135, sort: true}
             ,{title:'操作', width: 200, align:'center', toolbar: '#tool', fixed: 'right'}
         ]]

@@ -23,10 +23,12 @@
                             };
                         }
                         ,request: {
-                            pageName: 'current' // 页码的参数名称
-                            ,limitName: 'size' // 每页数据量的参数名
+                            pageName: 'page.current' // 页码的参数名称
+                            ,limitName: 'page.size' // 每页数据量的参数名
                         }
-                        ,height: settings.height || 523
+                        ,height: settings.height || 'full'
+                        ,even: true //开启隔行背景
+                        ,size: 'sm' //小尺寸的表格
                         ,cols: settings.cols
                         ,toolbar: settings.toolbar
                         ,page: true //开启分页
@@ -34,6 +36,17 @@
                         ,limit: settings.limit || 10
                         ,limits: [10, 20, 30, 40, 50]
                     });
+
+                    function searchParam() {
+                        var searchObject = {};
+                        $('.search').each(function (index, domEle) {
+                            var $domEle = $(domEle);
+                            if ($domEle.val() != null && $.trim($domEle.val()) !== '') {
+                                searchObject[$domEle.attr('name')] = $domEle.val();
+                            }
+                        });
+                        return searchObject;
+                    }
 
                     // 监听查询事件
                     layui.form.on('submit()', function(data){
@@ -55,17 +68,6 @@
                         tableIns.reload({where: where});
                     });
                 });
-            };
-            /* 查询参数 */
-            pageConfig.searchParam = function() {
-                var searchObject = {};
-                $('.search').each(function (index, domEle) {
-                    var $domEle = $(domEle);
-                    if ($domEle.val() != null && $.trim($domEle.val()) !== '') {
-                        searchObject[$domEle.attr('name')] = $domEle.val();
-                    }
-                });
-                return searchObject;
             };
 
             return pageConfig;
