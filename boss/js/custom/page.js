@@ -26,12 +26,12 @@
                             pageName: 'current' // 页码的参数名称
                             ,limitName: 'size' // 每页数据量的参数名
                         }
-                        ,height: settings.height || 600
+                        ,height: settings.height || 523
                         ,cols: settings.cols
                         ,toolbar: settings.toolbar
                         ,page: true //开启分页
                         ,layout: ['count', 'prev', 'page', 'next', 'skip', 'limit', 'refresh']
-                        ,limit: 2
+                        ,limit: settings.limit || 10
                         ,limits: [10, 20, 30, 40, 50]
                     });
 
