@@ -1,25 +1,18 @@
 $(function ($, window) {
     // 获取菜单
     function menu() {
-        adminConfig.ajax({
+        util.ajax({
             url: adminConfig.srvUrl() + '/sys/menu',
             method: 'get',
             success: (result) => {
-                console.info(result);
-                if (result.code == '000000000000') {
-                    // 写入菜单
-                    var menus = result.content;
-                    $.each(menus, function (index, menu) {
-                        appendMenu("#nav", menu);
-                    });
+                // 写入菜单
+                var menus = result.content;
+                $.each(menus, function (index, menu) {
+                    appendMenu("#nav", menu);
+                });
 
-                    // 应用样式
-                    layui.use(['jquery','admin'], function(){});
-                } else {
-                    layui.use('layer', function () {
-                        layui.layer.msg(result.showMsg);
-                    });
-                }
+                // 应用样式
+                layui.use(['jquery','admin'], function(){});
             }
         });
     }
@@ -45,19 +38,12 @@ $(function ($, window) {
 
     //退出登录
     $("#logOut").on("click", function () {
-        adminConfig.ajax({
+        util.ajax({
             url: adminConfig.srvUrl() + '/sys/logout',
             method: 'get',
             success: (result) => {
-                console.info(result);
-                if (result.code == '000000000000') {
-                    $.removeCookie(`${adminConfig.tokenName()}`);
-                    window.location.href = './login.html';
-                } else {
-                    layui.use('layer', function () {
-                        layui.layer.msg(result.showMsg);
-                    });
-                }
+                $.removeCookie(`${adminConfig.tokenName()}`);
+                window.location.href = './login.html';
             }
         });
     });

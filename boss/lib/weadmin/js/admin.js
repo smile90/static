@@ -294,17 +294,17 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 	/*
 	    参数解释：
 	    title   标题
-	    url     请求的url
+	    content     内容
 	    id      需要操作的数据id
 	    w       弹出层宽度（缺省调默认值）
 	    h       弹出层高度（缺省调默认值）
 	*/
-	window.WeAdminShow = function(title, url, w, h) {
+	window.WeAdminShow = function(title, content, w, h) {
 		if(title == null || title == '') {
 			title = false;
 		};
-		if(url == null || url == '') {
-			url = "404.html";
+		if(content == null || content == '') {
+            content = "无内容";
 		};
 		if(w == null || w == '') {
 			w = ($(window).width() * 0.9);
@@ -320,11 +320,13 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 			shadeClose: true,
 			shade: 0.4,
 			title: title,
-			content: url
+			content: content,
+            btn: ['确定'],
+            yes: function(index, layero) { layer.close(index); }
 		});
 	}
-	/*弹出层+传递ID参数*/
-	window.WeAdminEdit = function(title, url, id, w, h) {
+	/*弹出层+传递参数*/
+	window.WeAdminEdit = function(title, url, data, w, h) {
 		if(title == null || title == '') {
 			title = false;
 		};
@@ -349,11 +351,10 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 			success: function(layero, index) {
 				//向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
 				var body = layer.getChildFrame('body', index);
-				body.contents().find("#dataId").val(id);
-				console.log(id);
+				body.contents().find("#data").val(data);
 			},
 			error: function(layero, index) {
-				alert("aaa");
+                alert('layui open error.');
 			}
 		});
 	}

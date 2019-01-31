@@ -75,20 +75,22 @@
 <script type="text/javascript" charset="utf-8" src="../../lib/layui/layui.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="../../js/custom/common.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/util.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/custom/token.js"></script>
-<script type="text/javascript" charset="utf-8" src="../../js/custom/page.js"></script>
 
 <script type="text/javascript" charset="utf-8">
-
-    layui.use(['table'], function() {
+    layui.extend({
+        admin: '{/}../../lib/weadmin/js/admin'
+    });
+    layui.use(['table', 'admin'], function() {
         layui.table.on('tool(table)', function(obj){
             console.info(obj);
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'detail'){ //查看
-
+            if(layEvent === 'detail'){ // 查看
+                WeAdminEdit('查看', './detail.html', obj.data.id, 350, 400);
             } else if(layEvent === 'edit'){ // 编辑
-
+                WeAdminEdit('编辑', './edit.html', obj.data.id);
             } else if(layEvent === 'del'){ // 删除
                 layer.confirm('确认删除么？', function(index){
 
@@ -111,7 +113,7 @@
     });
 
     /* 构建数据表 */
-    pageConfig.pageTable({
+    util.pageTable({
         elem: '#table'
         ,toolbar: '#toolbar'
         ,url: adminConfig.srvUrl() + '/adminUser/listPage'
@@ -119,11 +121,11 @@
             {field: 'id', title: 'ID', width:80, hide: true}
             ,{field: 'userId', title: '用户ID', width:100}
             ,{field: 'userNo', title: '用户编号', width:100}
-            ,{field: 'username', title: '用户名', width:200, sort: true}
-            ,{field: 'realname', title: '姓名', width:200}
+            ,{field: 'username', title: '用户名', sort: true}
+            ,{field: 'realname', title: '姓名'}
             ,{field: 'userStatus', title: '用户状态', width: 100}
             ,{field: 'status', title: '数据状态', width: 100}
-            ,{field: 'orders', title: '排序', width: 135, sort: true}
+            ,{field: 'orders', title: '排序', width: 100, sort: true}
             ,{title:'操作', width: 200, align:'center', toolbar: '#tool', fixed: 'right'}
         ]]
     });

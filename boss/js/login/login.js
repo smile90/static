@@ -9,21 +9,16 @@ $(function ($, window) {
 
     // 登录请求
     function login(data) {
-        adminConfig.ajax({
+        util.ajax({
             url: adminConfig.srvUrl() + '/sys/login',
             method: 'post',
             data: data.field,
             success: (result) => {
-                console.info(result);
-                if(result.code == '000000000000') {
-                    $.cookie(`${adminConfig.tokenName()}`, result.content.token, {path: `${adminConfig.cookiePath()}`});
-                    window.location.href = './index.html';
-                } else {
-                    layui.use('layer', function () {
-                        layui.layer.msg(result.showMsg);
-                        $("#validCode").click();
-                    });
-                }
+                $.cookie(adminConfig.tokenName(), result.content.token, {path: adminConfig.cookiePath()});
+                window.location.href = './index.html';
+            },
+            notSuccess: (result) => {
+                $("#validCode").click();
             }
         });
     }
