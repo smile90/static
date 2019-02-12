@@ -27,16 +27,31 @@
             <form class="layui-form layui-col-md12 we-search">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <input type="text" placeholder="用户ID" name="userId" class="search layui-input" >
+                        <input class="search layui-input" type="text" placeholder="用户ID" name="userId">
                     </div>
                     <div class="layui-inline">
-                        <input type="text" placeholder="用户编号" name="userNo" class="search layui-input" >
+                        <input class="search layui-input" type="text" placeholder="用户编号" name="userNo">
                     </div>
                     <div class="layui-inline">
-                        <input type="text" placeholder="用户名" name="username" class="search layui-input" >
+                        <input class="search layui-input" type="text" placeholder="用户名" name="username">
                     </div>
                     <div class="layui-inline">
-                        <input type="text" placeholder="姓名" name="realname" class="search layui-input">
+                        <input class="search layui-input" type="text" placeholder="姓名" name="realname">
+                    </div>
+                    <!--
+                    <div class="layui-input-inline">
+                        <select class="search" data-type="select" data-dict="DataStatus" data-name="status" >
+                            <option value="">-数据状态-</option>
+                        </select>
+                    </div>
+                    -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据状态</label>
+                        <div class="search" data-type="radio" data-dict="DataStatus" data-name="status"></div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户状态</label>
+                        <div class="search" data-type="checkbox" data-dict="UserStatus" data-name="userStatus"></div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -76,6 +91,7 @@
 
 <script type="text/javascript" charset="utf-8" src="../../js/custom/common.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/custom/util.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/dict.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/custom/token.js"></script>
 
 <script type="text/javascript" charset="utf-8">
@@ -87,10 +103,10 @@
             console.info(obj);
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'detail'){ // 查看
-                WeAdminEdit('查看', './detail.html', obj.data.id, 350, 400);
+            if(layEvent === 'detail') { // 查看
+                WeAdminEdit('查看', './detail.html', obj.data.id, 450, 600);
             } else if(layEvent === 'edit'){ // 编辑
-                WeAdminEdit('编辑', './edit.html', obj.data.id);
+                WeAdminEdit('编辑', './edit.html', obj.data.id, 450, 600);
             } else if(layEvent === 'del'){ // 删除
                 layer.confirm('确认删除么？', function(index){
 

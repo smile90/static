@@ -26,37 +26,6 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 		 * @todo 读取本地存储中记录的已打开的tab项
 		 * 刷新后，读取记录，打开原来已打开的tab项
 		 */
-
-		/*
-		 * @todo table事件
-		 */
-		tableCheck = {
-			init: function() {
-				$(".layui-form-checkbox").click(function(event) {
-					if($(this).hasClass('layui-form-checked')) {
-						$(this).removeClass('layui-form-checked');
-						if($(this).hasClass('header')) {
-							$(".layui-form-checkbox").removeClass('layui-form-checked');
-						}
-					} else {
-						$(this).addClass('layui-form-checked');
-						if($(this).hasClass('header')) {
-							$(".layui-form-checkbox").addClass('layui-form-checked');
-						}
-					}
-				});
-			},
-			getData: function() {
-				var obj = $(".layui-form-checked").not('.header');
-				var arr = [];
-				obj.each(function(index, el) {
-					arr.push(obj.eq(index).attr('data-id'));
-				});
-				return arr;
-			}
-		}
-		//开启表格多选
-		tableCheck.init();
 		//延时加载
 		setTimeout(function() {
 			if(sessionStorage.getItem("menu")) {
