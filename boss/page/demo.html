@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录-后台管理系统-1.0</title>
+
+    <link rel="stylesheet" href="./lib/weadmin/css/font.css">
+    <link rel="stylesheet" href="./lib/weadmin/css/weadmin.css">
+</head>
+<body class="login-bg">
+<div class="login">
+    <div class="message">管理后台登录</div>
+    <div id="darkbannerwrap"></div>
+
+
+    <!--
+    <div class="layui-input-inline">
+        <select class="search" data-type="select" data-dict="DataStatus" data-name="status" >
+            <option value="">-数据状态-</option>
+        </select>
+    </div>
+    -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据状态</label>
+        <div class="search" data-type="radio" data-dict="DataStatus" data-name="status"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户状态</label>
+        <div class="search" data-type="checkbox" data-dict="UserStatus" data-name="userStatus"></div>
+    </div>
+
+
+    <form method="post" class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户状态</label>
+            <div class="layui-input-inline">
+                <select class="value" data-type="select" data-dict="UserStatus" data-name="userStatus" >
+                    <option value="">-用户状态-</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据状态</label>
+            <div class="value" data-type="radio" data-dict="DataStatus" data-name="status"></div>
+        </div>
+    </form>
+</div>
+<!-- 底部结束 -->
+
+    <script type="text/javascript" charset="utf-8" src="./lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./lib/jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./lib/layui/layui.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="./js/custom/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./js/custom/util.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./js/login/login.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '[name=createTime]',
+                type: 'datetime'
+            });
+        });
+    </script>
+
+</body>
+</html>

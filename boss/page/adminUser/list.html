@@ -38,19 +38,12 @@
                     <div class="layui-inline">
                         <input class="search layui-input" type="text" placeholder="姓名" name="realname">
                     </div>
-                    <!--
-                    <div class="layui-input-inline">
-                        <select class="search" data-type="select" data-dict="DataStatus" data-name="status" >
-                            <option value="">-数据状态-</option>
-                        </select>
-                    </div>
-                    -->
                     <div class="layui-form-item">
-                        <label class="layui-form-label">数据状态</label>
+                        <label class="layui-form-label">数据状态：</label>
                         <div class="search" data-type="radio" data-dict="DataStatus" data-name="status"></div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">用户状态</label>
+                        <label class="layui-form-label">用户状态：</label>
                         <div class="search" data-type="checkbox" data-dict="UserStatus" data-name="userStatus"></div>
                     </div>
                 </div>
@@ -68,7 +61,7 @@
         <!-- 工具栏 -->
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+                <button class="layui-btn layui-btn-sm" lay-event="save">添加</button>
                 <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
             </div>
         </script>
@@ -94,47 +87,30 @@
 <script type="text/javascript" charset="utf-8" src="../../js/custom/dict.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/custom/token.js"></script>
 
+<script type="text/javascript" charset="utf-8" src="../../js/custom/page.js"></script>
+
 <script type="text/javascript" charset="utf-8">
     layui.extend({
         admin: '{/}../../lib/weadmin/js/admin'
     });
-    layui.use(['table', 'admin'], function() {
-        layui.table.on('tool(table)', function(obj){
-            console.info(obj);
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'detail') { // 查看
-                WeAdminEdit('查看', './detail.html', obj.data.id, 450, 600);
-            } else if(layEvent === 'edit'){ // 编辑
-                WeAdminEdit('编辑', './edit.html', obj.data.id, 450, 600);
-            } else if(layEvent === 'del'){ // 删除
-                layer.confirm('确认删除么？', function(index){
 
-                });
-            }
-        });
-
-        layui.table.on('toolbar(table)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            console.info(obj);
-            var data = obj.data; // 获得当前行数据
-            var layEvent = obj.event; // 获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'add'){ // 新增
-
-            } else if(layEvent === 'del'){ //删除
-                layer.confirm('确认删除么？', function(index){
-
-                });
-            }
-        });
+    page.initDefault({
+        deleteUrl: '/user/adminUser/delete',
+        detail: {
+            htmlUrl: './detail.html',
+            width: 600,
+            height: 500
+        }
     });
 
     /* 构建数据表 */
-    util.pageTable({
+    page.pageTable({
         elem: '#table'
         ,toolbar: '#toolbar'
-        ,url: adminConfig.srvUrl() + '/adminUser/listPage'
+        ,url: adminConfig.srvUrl() + '/user/adminUser/listPage'
         ,cols: [[ //表头
-            {field: 'id', title: 'ID', width:80, hide: true}
+            {type:'checkbox'}
+            ,{field: 'id', title: 'ID', width:80, hide: true}
             ,{field: 'userId', title: '用户ID', width:100}
             ,{field: 'userNo', title: '用户编号', width:100}
             ,{field: 'username', title: '用户名', sort: true}

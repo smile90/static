@@ -2,7 +2,7 @@ $(function ($, window) {
     // 获取菜单
     function menu() {
         util.ajax({
-            url: adminConfig.srvUrl() + '/sys/menu',
+            url: adminConfig.srvUrl() + '/user/sys/menu',
             method: 'get',
             success: (result) => {
                 // 写入菜单

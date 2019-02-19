@@ -4,7 +4,7 @@ $(function ($, window) {
 
     // 刷新验证码
     function validCode() {
-        $("#validCode").attr('src', adminConfig.srvUrl() + '/validCode/login');
+        $("#validCode").attr('src', adminConfig.srvUrl() + '/user/validCode/login');
     }
 
     // 登录请求

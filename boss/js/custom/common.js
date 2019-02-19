@@ -6,11 +6,11 @@
         window, function (global, adminConfig, $) {
             /* 接口地址 */
             adminConfig.srvUrl = function () {
-                return 'http://127.0.0.1:10001';
+                return 'http://127.0.0.1:10000';
             };
             /* Token名称 */
             adminConfig.tokenName = function () {
-                return 'token';
+                return 'bossToken';
             };
             /* 设备来源 */
             adminConfig.deviceSource = function () {

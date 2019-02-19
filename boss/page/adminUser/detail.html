@@ -8,36 +8,40 @@
   
   <body>
     <div class="weadmin-body">
-        <input type="hidden" name="data" id="data" value="" />
         <form class="layui-form layui-form-pane">
-            <div class="layui-form-item">
-                <label class="layui-form-label">用户ID</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="userId" disabled/>
-                </div>
-            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">用户编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="userNo" disabled/>
+                    <input type="text" class="layui-input value" name="userNo"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="username" disabled/>
+                    <input type="text" class="layui-input value" name="username" lay-verify="required"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="realname" disabled/>
+                    <input type="text" class="layui-input value" name="realname" lay-verify="required"/>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">创建时间</label>
+                <label class="layui-form-label">用户状态</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="createTime" disabled/>
+                    <select class="value" data-type="select" data-dict="UserStatus" data-name="userStatus" lay-verify="required">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据状态</label>
+                <div class="value" data-type="radio" data-dict="DataStatus" data-name="status" lay-verify="checked"></div>
+            </div>
+            <div class="layui-form-item submit">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="form">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>
@@ -49,24 +53,19 @@
 
 <script type="text/javascript" charset="utf-8" src="../../js/custom/common.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/custom/util.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/dict.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/verify.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/custom/token.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/custom/page.js"></script>
 
 <script type="text/javascript" charset="utf-8">
     $(function() {
-        util.ajax({
-            url: adminConfig.srvUrl() + '/adminUser/get/' + $('#data').val(),
-            method: 'get',
-            success: (result) => {
-                if(util.isSuccess(result)) {
-                    $('.value').each(function (index, domEle) {
-                        var $domEle = $(domEle);
-                        var value = result.content[$domEle.attr('name')];
-                        $domEle.val(`${ value || '-'}`);
-                    });
-                } else {
-                    util.error(result);
-                }
-            }
+        // 请求地址
+        page.detail({
+            detailUrl: adminConfig.srvUrl() + '/user/adminUser/get/' + $('#id').val(),
+            saveUrl: adminConfig.srvUrl() + '/user/adminUser/save',
+            editUrl: adminConfig.srvUrl() + '/user/adminUser/update/' + $('#id').val()
         });
     });
 </script>

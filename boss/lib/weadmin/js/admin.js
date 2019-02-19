@@ -320,7 +320,14 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 			success: function(layero, index) {
 				//向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
 				var body = layer.getChildFrame('body', index);
-				body.contents().find("#data").val(data);
+				var form = body.contents().find('.layui-form');
+				for (var item in data) {
+                    form.append(`<input type="hidden" name="${ item }" id="${ item }" value="${ data[item] }" />`);
+				}
+
+                layui.use(['form'], function() {
+                    layui.form.render();
+                });
 			},
 			error: function(layero, index) {
                 alert('layui open error.');
