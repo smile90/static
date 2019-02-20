@@ -36,7 +36,12 @@ $(function ($, window) {
         }
     }
 
-    //退出登录
+    // 查看信息
+    $("#userInfo").on("click", function () {
+        util.adminEdit('查看', './user.html', {}, 450, 500);
+    });
+
+    // 退出登录
     $("#logOut").on("click", function () {
         util.ajax({
             url: adminConfig.srvUrl() + '/sys/logout',

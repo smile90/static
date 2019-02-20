@@ -12,9 +12,9 @@
     <div class="weadmin-nav">
 		<span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">管理员管理</a>
+        <a href="">角色管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>角色列表</cite></a>
       </span>
     <a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -27,24 +27,14 @@
             <form class="layui-form layui-col-md12 we-search">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <input class="search layui-input" type="text" placeholder="用户ID" name="userId">
+                        <input class="search layui-input" type="text" placeholder="标识" name="code">
                     </div>
                     <div class="layui-inline">
-                        <input class="search layui-input" type="text" placeholder="用户编号" name="userNo">
-                    </div>
-                    <div class="layui-inline">
-                        <input class="search layui-input" type="text" placeholder="用户名" name="username">
-                    </div>
-                    <div class="layui-inline">
-                        <input class="search layui-input" type="text" placeholder="姓名" name="realname">
+                        <input class="search layui-input" type="text" placeholder="名称" name="name">
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">数据状态：</label>
-                        <div class="search" data-type="radio" data-dict="DataStatus" data-name="status"></div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户状态：</label>
-                        <div class="search" data-type="checkbox" data-dict="UserStatus" data-name="userStatus"></div>
+                        <label class="layui-form-label">可用状态：</label>
+                        <div class="search" data-type="checkbox" data-dict="YesNo" data-name="useable"></div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -68,7 +58,7 @@
 
         <!-- 操作栏 -->
         <script type="text/html" id="tool">
-            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+            <!--<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>-->
             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
@@ -96,11 +86,11 @@
 
     /* 初始化默认 */
     page.initDefault({
-        deleteUrl: adminConfig.srvUrl() + '/user/adminUser/delete',
+        deleteUrl: adminConfig.srvUrl() + '/user/adminRole/delete',
         detail: {
             htmlUrl: './detail.html',
             width: 450,
-            height: 550
+            height: 500
         }
     });
 
@@ -108,23 +98,18 @@
     page.pageTable({
         elem: '#table'
         ,toolbar: '#toolbar'
-        ,url: adminConfig.srvUrl() + '/user/adminUser/listPage'
+        ,url: adminConfig.srvUrl() + '/user/adminRole/listPage'
         ,cols: [[ //表头
             {type:'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', width:80, hide: true}
-            ,{field: 'userId', title: '用户ID', width:150}
-            ,{field: 'userNo', title: '用户编号', width:150}
-            ,{field: 'username', title: '用户名', width:150, sort: true}
-            ,{field: 'realname', title: '姓名'}
-            ,{field: 'userStatus', title: '用户状态', width: 100, templet: function(d) {
-                    return dictUtil.getValue('UserStatus', d.userStatus);
-                }
-            }
-            ,{field: 'status', title: '数据状态', width: 100, templet: function(d) {
-                    return dictUtil.getValue('DataStatus', d.status);
+            ,{field: 'code', title: '标识', width:150}
+            ,{field: 'name', title: '名称', width:150}
+            ,{field: 'useable', title: '可用状态', width: 100, templet: function(d) {
+                    return dictUtil.getValue('YesNo', d.useable);
                 }
             }
             ,{field: 'orders', title: '排序', width: 100, sort: true}
+            ,{field: 'description', title: '描述'}
             ,{title:'操作', width: 200, align:'center', toolbar: '#tool', fixed: 'right'}
         ]]
     });

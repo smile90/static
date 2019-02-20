@@ -1,0 +1,68 @@
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录-后台管理系统-1.0</title>
+
+    <link rel="stylesheet" href="../../lib/weadmin/css/font.css">
+    <link rel="stylesheet" href="../../lib/weadmin/css/weadmin.css">
+</head>
+  
+  <body>
+    <div class="weadmin-body">
+        <form class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <label class="layui-form-label">标识</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input value" name="code" lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input value" name="name" lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">可用状态</label>
+                <div class="layui-input-block value" data-type="radio" data-dict="YesNo" data-name="useable" lay-verify="checked"></div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <textarea class="value layui-textarea" placeholder="请输入内容" name="description"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item submit">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="form">提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">清空</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<script type="text/javascript" charset="utf-8" src="../../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../lib/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../lib/layui/layui.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/custom/common.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/util.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/dict.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/verify.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/custom/token.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/custom/page.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        // 请求地址
+        page.detail({
+            detailUrl: adminConfig.srvUrl() + '/user/adminRole/get/' + $('#id').val(),
+            saveUrl: adminConfig.srvUrl() + '/user/adminRole/save',
+            editUrl: adminConfig.srvUrl() + '/user/adminRole/update/' + $('#id').val()
+        });
+    });
+</script>
+
+</body>
+
+</html>

@@ -4,8 +4,8 @@
     }
     (
         window, function (global, dictUtil, $) {
-            /* 接口地址 */
-            dictUtil.get = function (name) {
+            /* 获取字典 */
+            dictUtil.getDict = function (name) {
                 if (name === 'DataStatus') {
                     return {
                         NORMAL: '正常',
@@ -23,8 +23,17 @@
                         EXPIRED: '失效（过期）',
                         DELETED: '删除'
                     };
+                } else if (name === 'YesNo') {
+                    return {
+                        Y: '是',
+                        N: '否'
+                    };
                 }
-            }
+            };
+            /* 获取字典指定值 */
+            dictUtil.getValue = function (name, key) {
+                return dictUtil.getDict(name)[key];
+            };
             return dictUtil;
         }
     )
@@ -38,7 +47,7 @@ $(function () {
 
         var name = $domEle.data('name');
         var type = $domEle.data('type');
-        var dict = dictUtil.get($domEle.data('dict'));
+        var dict = dictUtil.getDict($domEle.data('dict'));
         var search = $domEle.hasClass('search');
 
         // 下拉选择
@@ -53,12 +62,12 @@ $(function () {
             }
         } else if ('radio' === type) {
             for (var item in dict) {
-                html += `<input type="radio" lay-skin="primary" ${ search ? 'class="search"' : '' } name="${ name }" value="${ item }" title="${ dict[item] }">`;
+                html += `<input type="radio" ${ search ? 'class="search"' : '' } name="${ name }" value="${ item }" title="${ dict[item] }">`;
             }
         }
         $domEle.append(html);
-        layui.use(['form'], function() {
-            layui.form.render();
-        });
+    });
+    layui.use(['form'], function() {
+        layui.form.render();
     });
 });

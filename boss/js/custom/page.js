@@ -29,7 +29,7 @@
                         } else if(layEvent === 'del'){ // 删除
                             layer.confirm('确认删除么？', function(index){
                                 util.ajax({
-                                    url: adminConfig.srvUrl() + deleteUrl + '/' + obj.data.id,
+                                    url: deleteUrl + '/' + obj.data.id,
                                     method: 'delete',
                                     success: (result) => {
                                         $("#tableSearch form").submit();
@@ -57,7 +57,7 @@
                                         ids.push(value.id);
                                     });
                                     util.ajax({
-                                        url: adminConfig.srvUrl() + deleteUrl,
+                                        url: deleteUrl,
                                         method: 'delete',
                                         data: {'ids': ids},
                                         success: (result) => {
@@ -189,18 +189,16 @@
                                 method: 'post',
                                 data: field,
                                 success: (result) => {
-                                if(util.isSuccess(result)) {
-                                layer.msg('提交成功！');
-                                setTimeout(function () {
-                                    // var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-                                    // parent.layer.close(index);
-                                    parent.location.reload();
-                                },1000);
-                            } else {
-                                util.error(result);
-                            }
-                        }
-                        });
+                                    if(util.isSuccess(result)) {
+                                        layer.msg('提交成功！');
+                                        setTimeout(function () {
+                                            parent.location.reload();
+                                        },1000);
+                                    } else {
+                                        util.error(result);
+                                    }
+                                }
+                            });
                             return false;
                         });
                     });
@@ -212,43 +210,43 @@
                         url: settings.detailUrl,
                         method: settings.method || 'get',
                         success: (result) => {
-                        if(util.isSuccess(result)) {
-                        var readOnly = (event == 'detail') || false;
+                            if(util.isSuccess(result)) {
+                                var readOnly = (event == 'detail') || false;
 
-                        $('.value').each(function (index, domEle) {
-                            var $domEle = $(domEle);
+                                $('.value').each(function (index, domEle) {
+                                    var $domEle = $(domEle);
 
-                            var type = $domEle.data('type');
-                            if ('radio' == type) {
-                                var value = result.content[$domEle.data('name')];
-                                $domEle.children(`[value=${ value }]:input`).attr('checked', true);
-                                if (readOnly) {
-                                    $domEle.children(`:input`).attr('disabled', true);
-                                }
-                            } else if ('checkbox' == type) {
-                                result.content[$domEle.data('name')].each(function(i, value) {
-                                    $domEle.children(`[value=${ value }]:input`).attr('checked', true);
+                                    var type = $domEle.data('type');
+                                    if ('radio' == type) {
+                                        var value = result.content[$domEle.data('name')];
+                                        $domEle.children(`[value=${ value }]:input`).attr('checked', true);
+                                        if (readOnly) {
+                                            $domEle.children(`:input`).attr('disabled', true);
+                                        }
+                                    } else if ('checkbox' == type) {
+                                        result.content[$domEle.data('name')].each(function(i, value) {
+                                            $domEle.children(`[value=${ value }]:input`).attr('checked', true);
+                                        });
+                                        if (readOnly) {
+                                            $domEle.children(`:input`).attr('disabled', true);
+                                        }
+                                    } else {
+                                        var value = result.content[$domEle.attr('name')];
+                                        $domEle.val(`${ value || ''}`);
+                                        if (readOnly) {
+                                            $domEle.attr('disabled', true);
+                                        }
+                                    }
+
+                                    layui.use(['form'], function() {
+                                        layui.form.render();
+                                    });
                                 });
-                                if (readOnly) {
-                                    $domEle.children(`:input`).attr('disabled', true);
-                                }
                             } else {
-                                var value = result.content[$domEle.attr('name')];
-                                $domEle.val(`${ value || '-'}`);
-                                if (readOnly) {
-                                    $domEle.attr('disabled', true);
-                                }
+                                util.error(result);
                             }
-
-                            layui.use(['form'], function() {
-                                layui.form.render();
-                            });
-                        });
-                    } else {
-                        util.error(result);
-                    }
-                }
-                });
+                        }
+                    });
                 }
             };
             return page;
