@@ -9,7 +9,7 @@
                 if (name === 'DataStatus') {
                     return {
                         NORMAL: '正常',
-                        DISABLE: '禁用',
+                        DISABLED: '禁用',
                         DELETED: '删除'
                     };
                 } else if (name === 'UserStatus') {
@@ -18,7 +18,7 @@
                         UNREVIEW: '未审核',
                         REVIEWING: '审核中',
                         UNAPPROVED: '未审核通过',
-                        DISABLE: '禁用',
+                        DISABLED: '禁用',
                         LOCKED: '锁定',
                         EXPIRED: '失效（过期）',
                         DELETED: '删除'

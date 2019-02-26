@@ -35,8 +35,12 @@
             };
             /* Ajax接口二次封装 */
             util.ajax = function (settings) {
+                var async = true;
+                if (settings.async != null && settings.async == false) {
+                    async = false;
+                }
                 var _settings = {
-                    async:settings.async || true,
+                    async: async,
                     url: settings.url,
                     method: settings.method,
                     data: $.extend(settings.data, {}),
@@ -51,10 +55,10 @@
                         if (util.isSuccess(result)) {
                             settings.success(result);
                         } else {
+                            util.error(result);
                             if (settings.notSuccess) {
                                 settings.notSuccess(result);
                             }
-                            util.error(result);
                         }
                     },
                     error:

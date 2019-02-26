@@ -162,10 +162,8 @@
                 var event = $('#event').val();
                 if (event == 'detail') {
                     $('.submit').remove();
-                }
-
-                // form事件处理
-                if (event != 'detail') {
+                } else {
+                    // form事件处理
                     layui.use('form', function(){
                         var form = layui.form;
 
@@ -184,19 +182,16 @@
                                     field[item] = value;
                                 }
                             }
+                            console.info(field);
                             util.ajax({
                                 url: url,
                                 method: 'post',
                                 data: field,
                                 success: (result) => {
-                                    if(util.isSuccess(result)) {
-                                        layer.msg('提交成功！');
-                                        setTimeout(function () {
-                                            parent.location.reload();
-                                        },1000);
-                                    } else {
-                                        util.error(result);
-                                    }
+                                    layer.msg('提交成功！');
+                                    setTimeout(function () {
+                                        parent.location.reload();
+                                    },1000);
                                 }
                             });
                             return false;
@@ -204,47 +199,44 @@
                     });
                 }
 
+
                 if (event != 'save') {
                     // 查询详细信息并回写
                     util.ajax({
                         url: settings.detailUrl,
                         method: settings.method || 'get',
                         success: (result) => {
-                            if(util.isSuccess(result)) {
-                                var readOnly = (event == 'detail') || false;
+                            var readOnly = (event == 'detail') || false;
 
-                                $('.value').each(function (index, domEle) {
-                                    var $domEle = $(domEle);
+                            $('.value').each(function (index, domEle) {
+                                var $domEle = $(domEle);
 
-                                    var type = $domEle.data('type');
-                                    if ('radio' == type) {
-                                        var value = result.content[$domEle.data('name')];
-                                        $domEle.children(`[value=${ value }]:input`).attr('checked', true);
-                                        if (readOnly) {
-                                            $domEle.children(`:input`).attr('disabled', true);
-                                        }
-                                    } else if ('checkbox' == type) {
-                                        result.content[$domEle.data('name')].each(function(i, value) {
-                                            $domEle.children(`[value=${ value }]:input`).attr('checked', true);
-                                        });
-                                        if (readOnly) {
-                                            $domEle.children(`:input`).attr('disabled', true);
-                                        }
-                                    } else {
-                                        var value = result.content[$domEle.attr('name')];
-                                        $domEle.val(`${ value || ''}`);
-                                        if (readOnly) {
-                                            $domEle.attr('disabled', true);
-                                        }
+                                var type = $domEle.data('type');
+                                if ('radio' == type) {
+                                    var value = result.content[$domEle.data('name')];
+                                    $domEle.children(`[value=${ value }]:input`).attr('checked', true);
+                                    if (readOnly) {
+                                        $domEle.children(`:input`).attr('disabled', true);
                                     }
-
-                                    layui.use(['form'], function() {
-                                        layui.form.render();
+                                } else if ('checkbox' == type) {
+                                    result.content[$domEle.data('name')].each(function(i, value) {
+                                        $domEle.children(`[value=${ value }]:input`).attr('checked', true);
                                     });
+                                    if (readOnly) {
+                                        $domEle.children(`:input`).attr('disabled', true);
+                                    }
+                                } else {
+                                    var value = result.content[$domEle.attr('name')];
+                                    $domEle.val(`${ value || ''}`);
+                                    if (readOnly) {
+                                        $domEle.attr('disabled', true);
+                                    }
+                                }
+
+                                layui.use(['form'], function() {
+                                    layui.form.render();
                                 });
-                            } else {
-                                util.error(result);
-                            }
+                            });
                         }
                     });
                 }

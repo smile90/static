@@ -12,13 +12,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">标识</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="code" lay-verify="required"/>
+                    <input type="text" class="layui-input value" name="code" lay-verify="required|codeExist"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input value" name="name" lay-verify="required"/>
+                    <input type="text" class="layui-input value" name="name" lay-verify="required|nameExist"/>
                 </div>
             </div>
             <div class="layui-form-item" pane="">
@@ -54,11 +54,39 @@
 
 <script type="text/javascript" charset="utf-8">
     $(function() {
+        var id = $('#id').val();
         // 请求地址
         page.detail({
-            detailUrl: adminConfig.srvUrl() + '/user/adminRole/get/' + $('#id').val(),
+            detailUrl: adminConfig.srvUrl() + '/user/adminRole/get/' + id,
             saveUrl: adminConfig.srvUrl() + '/user/adminRole/save',
-            editUrl: adminConfig.srvUrl() + '/user/adminRole/update/' + $('#id').val()
+            editUrl: adminConfig.srvUrl() + '/user/adminRole/update/' + id
+        });
+
+        layui.use(['form'], function() {
+            layui.form.verify({
+                codeExist: function(value, item) {
+                    var errorMsg = null;
+                    util.ajax({
+                        url: adminConfig.srvUrl() + '/user/adminRole/codeExist/' + value,
+                        method: 'get',
+                        async: false,
+                        data: $('#event').val() == 'edit' ? {'id': id} : {},
+                        success: (result) => { (result.content == true) ? (errorMsg = '角色标识已存在') : (errorMsg = null) }
+                    });
+                    return errorMsg;
+                },
+                nameExist: function(value, item) {
+                    var errorMsg = null;
+                    util.ajax({
+                        url: adminConfig.srvUrl() + '/user/adminRole/nameExist/' + value,
+                        method: 'get',
+                        async: false,
+                        data: $('#event').val() == 'edit' ? {'id': id} : {},
+                        success: (result) => { (result.content == true) ? (errorMsg = '角色名称已存在') : (errorMsg = null) }
+                    });
+                    return errorMsg;
+                }
+            });
         });
     });
 </script>

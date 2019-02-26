@@ -39,12 +39,12 @@
                         <input class="search layui-input" type="text" placeholder="姓名" name="realname">
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">数据状态：</label>
-                        <div class="search" data-type="radio" data-dict="DataStatus" data-name="status"></div>
-                    </div>
-                    <div class="layui-form-item">
                         <label class="layui-form-label">用户状态：</label>
                         <div class="search" data-type="checkbox" data-dict="UserStatus" data-name="userStatus"></div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据状态：</label>
+                        <div class="search" data-type="checkbox" data-dict="DataStatus" data-name="status"></div>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -109,13 +109,15 @@
         elem: '#table'
         ,toolbar: '#toolbar'
         ,url: adminConfig.srvUrl() + '/user/adminUser/listPage'
-        ,cols: [[ //表头
+        ,cols: [[ // 表头
             {type:'checkbox', fixed: 'left'}
             ,{field: 'id', title: 'ID', width:80, hide: true}
             ,{field: 'userId', title: '用户ID', width:150}
             ,{field: 'userNo', title: '用户编号', width:150}
             ,{field: 'username', title: '用户名', width:150, sort: true}
             ,{field: 'realname', title: '姓名'}
+            ,{field: 'phoneNo', title: '手机号'}
+            ,{field: 'email', title: '邮箱'}
             ,{field: 'userStatus', title: '用户状态', width: 100, templet: function(d) {
                     return dictUtil.getValue('UserStatus', d.userStatus);
                 }
